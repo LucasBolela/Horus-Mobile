@@ -11,8 +11,14 @@
   "dependencies": {
     "expo": "~46.0.16",
     "expo-status-bar": "~1.4.0",
+    "pluggy-js": "^0.8.3",
     "react": "18.0.0",
-    "react-native": "0.69.6"
+    "react-native": "0.69.6",
+    "react-native-pluggy-connect": "^0.4.1",
+    "react-native-webview": "^11.23.1",
+    "typescript": "^4.6.3",
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
