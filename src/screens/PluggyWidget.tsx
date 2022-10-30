@@ -30,8 +30,8 @@ export default function PluggyWidget({navigation}) {
           },
           body: JSON.stringify({
             options: {
-              clientUserId: '11f35b78-1807-42a2-8865-970817eef7f0',
-              webhookUrl: "https://eog3rhemf3c307y.m.pipedream.net"
+              // clientUserId: '11f35b78-1807-42a2-8865-970817eef7f0',
+              webhookUrl: "https://eoei880aykffbxz.m.pipedream.net/"
             },
           }),
         });
@@ -123,8 +123,8 @@ async function getApiKey() {
       },
       body: JSON.stringify({
         // connectToken: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjM5M2Y3YjE4LWU1ODYtNDg5Mi1iNzM0LWM0NzRiMmRjNDA0YiIsImRhdGEiOiJkNzJmNDI2MGM1Y2E4N2MzNjU0ZmVlM2E0MDZkNjhiZjpjZDMzYTUwN2RkOTRmYjViOGJmYjFiMmY5ZTg4NmQyMWZiNDg5Yzk3NjA5NjBlYzdlNWI1ZDQ5ODM2YzhkZjk3NTY0MzgzOGRhMDliYmZjMGQ3NWEzODMyMjFlNzI1MzFlN2Y1NmRiMGQ5MTc1OThiNzgzMzFiYjQ5MTBlYjJlYTA3MjUzNzIwZGFlY2JlYzM3MzY0MGNhNjRlMjI1MTc2NTUwZjc2ZDYwYzZhYTFhMzUyYWM5NjEwZTljMWQ4ODhiY2MwMGRlNDQzMWVkNmMyYzY4ZmYxYjEyYzllYmE5MjZhMGUwNDQ3NDQ2OGZmYTdjMzIyYjk0NjE4ODViODY2IiwiaWF0IjoxNjY2OTA2NTg5LCJleHAiOjE2NjY5MDgzODl9.LZReFGgGvy-M6gT583-OsDb0UrrEjk_mB8J5MC7q1Y-HoOWhMo34VAZaJ1fvyJB4ESvF7HDLqYSHvvwiqfuvUlQf3-mcmfzGEDDHidNGwJGwTiK9mPgMSRA4LGCC8adLFF_9IWwUybjGFElGYsPq3gAbQbASrP8YoJgafycFfI7CDVa2kAeVO9xbyK30HXRT7oLmpElgbhjXgtNlew0IBq1iYQU52PiGTC9Bdd6zwgunEiJ6OPH7d8-OklG_6_0SV5AjFYaV1hPAci2mrNs78DrG7ac5r4e4avPziavrEXDpnH76mFI35rfuuEqzZZIGrbVMWfmznbU5I_Ei_rJueQ',
-        clientId: '393f7b18-e586-4892-b734-c474b2dc404b',
-        clientSecret: '4e040d4a-a370-41f5-83c5-7fd867bdadf5'
+        clientId: '407b0d09-a699-4b44-b2b2-9551012b43c2',
+        clientSecret: 'c8db454f-216e-4f9b-b68b-508c0a4bcfb7'
       }),
     })
   
