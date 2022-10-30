@@ -31,7 +31,7 @@ export default function PluggyWidget({navigation}) {
           body: JSON.stringify({
             options: {
               // clientUserId: '11f35b78-1807-42a2-8865-970817eef7f0',
-              webhookUrl: "https://eoei880aykffbxz.m.pipedream.net/"
+              webhookUrl: "https://still-meadow-57659.herokuapp.com/api/pluggy/item/webhook/"
             },
           }),
         });
@@ -65,7 +65,7 @@ export default function PluggyWidget({navigation}) {
 
   const handleOnClose = useCallback(() => {
     setToken('');
-    navigation.navigate('Login');
+    navigation.navigate('Tabs');
   }, []);
 
   if (error) {
