@@ -4,6 +4,7 @@ import { LoginScreen } from "../screens/LoginScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { OnboardingScreen } from "../screens/OnboardingScreen";
 import PluggyWidget from "../screens/PluggyWidget";
+import { Tabs } from "./BottomTabNav"
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export const AuthStack = () => {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Widget" component={PluggyWidget} />
+            <Stack.Screen name="Tabs" component={Tabs} />
         </Stack.Navigator>
     );
 };
