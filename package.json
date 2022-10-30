@@ -9,17 +9,22 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^6.2.0",
+    "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native-stack": "^6.9.1",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
+    "axios": "^1.1.3",
     "expo": "~46.0.16",
     "expo-status-bar": "~1.4.0",
     "pluggy-js": "^0.8.3",
     "react": "18.0.0",
+    "react-hook-form": "^7.38.0",
     "react-native": "0.69.6",
+    "react-native-axios": "^0.17.1",
     "react-native-pluggy-connect": "^0.4.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-webview": "^11.23.1",
+    "react-native-webview": "11.23.0",
     "typescript": "^4.6.3"
   },
   "devDependencies": {
