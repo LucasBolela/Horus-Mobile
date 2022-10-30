@@ -43,12 +43,12 @@ export const LoginScreen = ({navigation}) => {
                     />}
                     inputType={"password"}
                     fieldButtonLabel={"Esqueceu a senha?"}
-                    fieldButtonFunction={() => navigation.navigate('Register')}
+                    fieldButtonFunction={() => navigation.navigate('Widget')}
                 />
 
                 <CustomButton 
                     label={"Entrar"} 
-                    onPressFunction={() => navigation.navigate('Widget')} 
+                    onPressFunction={() => navigation.navigate('Tabs')} 
                 />
 
                 <View
