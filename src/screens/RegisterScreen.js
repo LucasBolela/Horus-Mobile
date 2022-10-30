@@ -14,6 +14,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const RegisterScreen = ({ navigation }) => {
@@ -21,6 +23,14 @@ export const RegisterScreen = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [doLabel, setDoLabel] = useState('Data');
     const [password, setPassword] = useState('');
+    const [values, setValues] = useState({
+		email: '',
+        password: '',
+        cnpj: '',
+        registered_name: '',
+        whatsapp: ''
+	});
+
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
@@ -31,18 +41,45 @@ export const RegisterScreen = ({ navigation }) => {
 
     const { control, handleSubmit, formState: { errors } } = useForm();
 
-    function handleRegister(data) {
-        const { password, confirmPassword } = data;
-        setPassword(password);
+    const teste = async (data) => {
+        let datas = JSON.stringify({
+            cnpj: data.cnpj,
+            registered_name: data.registered_name,
+            username: data.email,
+            password: data.password,
+            whatsapp: data.whatsapp
+        });
 
-        if (password !== confirmPassword) {
-            // errors.confirmPassword = { message: "Senhas devem ser iguais" }
-        }
-        console.log(errors)
+        const response = await axios({
+            method: 'POST',
+            url: 'https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/',
+            data: datas,
+        });
+        
+        response.then(response => response.json())
+        .then(response => {
+            console.log(response)
+            navigation.navigate('Tabs');
+        });
+        // postClient(data)
+    };
+
+    const handleRegister = () => {
+    // async (data) => await postClient(data);
+        // const { password, confirmPassword } = data;
+        // setPassword(password);
+
+        // if (password !== confirmPassword) {
+        //     // errors.confirmPassword = { message: "Senhas devem ser iguais" }
+        // }
+        console.log(values)
 
         // if (errors) return;
+        // async function postClient() {
 
-        postClient(data);
+        // }
+        // teste(values)
+        postClient(values, navigation);
     }
 
     return (
@@ -61,17 +98,20 @@ export const RegisterScreen = ({ navigation }) => {
                 >
                     Cadastro
                 </Text>
-                <Controller
+
+
+                {/* <Controller
                     control={control}
                     name="registered_name"
                     rules={{
                         required: 'Informe a razão social',
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
 
                         <InputField
                             label={"Razão Social"}
-                            onChange={onChange}
+                            // onChange={(text) => setValues(prevState => ({...prevState, registered_name: text}))}
+                            onChange={(value) => setValues(prevState => ({...prevState, registered_name: value}))}
                             errorMessage={errors.registered_name?.message}
                             icon={<Ionicons
                                 name="person-outline"
@@ -80,9 +120,9 @@ export const RegisterScreen = ({ navigation }) => {
                                 style={{ marginRight: 5 }}
                             />}
                         />
-                    )}
-                />
-                <Controller
+                    {/* )}
+                /> */}
+                {/* <Controller
                     control={control}
                     name="cnpj"
                     rules={{
@@ -93,10 +133,10 @@ export const RegisterScreen = ({ navigation }) => {
 
                         }
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
                         <InputField
                             label={"CNPJ"}
-                            onChange={onChange}
+                            onChange={(value) => setValues(prevState => ({...prevState, cnpj: value}))}
                             errorMessage={errors.cnpj?.message}
                             icon={<Ionicons
                                 name="business"
@@ -104,10 +144,10 @@ export const RegisterScreen = ({ navigation }) => {
                                 color="#666"
                                 style={{ marginRight: 5 }}
                             />}
-                        />)
-                    }
-                />
-                <Controller
+                        />
+                    {/* }
+                /> */}
+                {/* <Controller
                     control={control}
                     name="whatsapp"
                     rules={{
@@ -118,10 +158,10 @@ export const RegisterScreen = ({ navigation }) => {
 
                         }
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
                         <InputField
                             label={"WhatsApp"}
-                            onChange={onChange}
+                            onChange={(value) => setValues(prevState => ({...prevState, whatsapp: value}))}
                             errorMessage={errors.whatsapp?.message}
                             icon={<Ionicons
                                 name="logo-whatsapp"
@@ -130,9 +170,9 @@ export const RegisterScreen = ({ navigation }) => {
                                 style={{ marginRight: 5 }}
                             />}
                         />
-                    )}
-                />
-                <Controller
+                    {/* )}
+                /> */}
+                {/* <Controller
                     control={control}
                     name="email"
                     rules={{
@@ -143,10 +183,10 @@ export const RegisterScreen = ({ navigation }) => {
 
                         }
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
                         <InputField
                             label={"Email"}
-                            onChange={onChange}
+                            onChange={(value) => setValues(prevState => ({...prevState, email: value}))}
                             errorMessage={errors.email?.message}
                             icon={<MaterialIcons
                                 name="alternate-email"
@@ -156,9 +196,9 @@ export const RegisterScreen = ({ navigation }) => {
                             />}
                             keyboardType={"email-address"}
                         />
-                    )}
-                />
-                <Controller
+                    {/* )}
+                /> */}
+                {/* <Controller
                     control={control}
                     name="password"
                     rules={{
@@ -168,10 +208,10 @@ export const RegisterScreen = ({ navigation }) => {
                             message: 'Senha Inválida! Deve conter pelo menos 1 caracter Maiúsculo, 1 caracter minúsculo, número e carcater especial'
                         }
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
                         <InputField
                             label={"Senha"}
-                            onChange={onChange}
+                            onChange={(value) => setValues(prevState => ({...prevState, password: value}))}
                             errorMessage={errors.password?.message}
                             icon={<Ionicons
                                 name="ios-lock-closed-outline"
@@ -181,9 +221,9 @@ export const RegisterScreen = ({ navigation }) => {
                             />}
                             inputType={"password"}
                         />
-                    )}
-                />
-                <Controller
+                    {/* )}
+                /> */}
+                {/* <Controller
                     control={control}
                     name="confirmPassword"
                     rules={{
@@ -193,10 +233,10 @@ export const RegisterScreen = ({ navigation }) => {
                             message: 'Senha Inválida! Deve conter pelo menos 1 caracter Maiúsculo, 1 caracter minúsculo, número e carcater especial'
                         }
                     }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange } }) => ( */}
                         <InputField
                             label={"Confirmar senha"}
-                            onChange={onChange}
+                            onChange={(value) => setValues(prevState => ({...prevState, confirmPassword: value}))}
                             errorMessage={errors.confirmPassword?.message}
                             icon={<Ionicons
                                 name="ios-lock-closed-outline"
@@ -206,8 +246,8 @@ export const RegisterScreen = ({ navigation }) => {
                             />}
                             inputType={"password"}
                         />
-                    )}
-                />
+                    {/* )}
+                /> */}
                 {/* <View
                     style={{
                         flexDirection: 'row',
@@ -254,10 +294,55 @@ export const RegisterScreen = ({ navigation }) => {
 
                 <CustomButton
                     label={"Finalizar"}
-                    onPressFunction={handleSubmit(handleRegister)}
+                    onPressFunction={handleRegister}
+                        // handleSubmit(handleRegister)}
+                        // async (data) => {
+                        // let datas = JSON.stringify({
+                        //     cnpj: data.cnpj,
+                        //     registered_name: data.registered_name,
+                        //     username: data.email,
+                        //     password: data.password,
+                        //     whatsapp: data.whatsapp
+                        // });
+                
+                        // let res = await fetch('https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/', {
+                        //     method: 'POST',
+                        //     body: datas
+                        // })
+                
+                        // let ress = res.json();
+                        // console.log(ress)
+
+                    //     try {
+                    //         let datas = JSON.stringify({
+                    //             cnpj: data.cnpj,
+                    //             registered_name: data.registered_name,
+                    //             username: data.email,
+                    //             password: data.password,
+                    //             whatsapp: data.whatsapp
+                    //         });
+                    
+                    //         let teste = await axios({
+                    //             method: 'POST',
+                    //             url: 'https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/',
+                    //             data: datas,
+                    //         })
+                            
+                    //         teste.then(response => response.json())
+                    //         .then(response => {
+                    //             console.log(response)
+                    //             navigation.navigate('Tabs');
+                    //         });
+                    
+                    //         // Router.push('/admin/login');
+                    //     } catch (error) {
+                    //         console.log('aksjdklaj');
+                    //         console.log(error);
+                    //     }
+                    // })}
                 //     () => {
-                //     handleSubmit(handleRegister())
-                //     // navigation.navigate('Widget')
+                    // handleSubmit(handleRegister())
+                    // navigation.navigate('Widget')
                 // }} 
                 />
                 <View
@@ -268,7 +353,9 @@ export const RegisterScreen = ({ navigation }) => {
                     }}
                 >
                     <Text>Já está cadastrado?</Text>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={() => {
+                        postClient()
+                    }}>
                         <Text style={{ color: '#227bed', fontWeight: '700' }}> Entre aqui</Text>
                     </TouchableOpacity>
                 </View>
@@ -277,60 +364,44 @@ export const RegisterScreen = ({ navigation }) => {
     )
 }
 
-async function postClient(data) {
+async function postClient(data, navigation) {
+    console.log(data)
     try {
-        await fetch('https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/', {
+        let datas = JSON.stringify({
+            cnpj: data.cnpj,
+            registered_name: data.registered_name,
+            username: data.email,
+            password: data.password,
+            whatsapp: data.whatsapp
+        });
+
+        const response = await axios({
             method: 'POST',
-            Haders: {
-                "accept": "application/json",
-                "content-type": "application/json",
-                // "X-API-KEY": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNGI5YzgyMDE5N2FiYzdiZjZhZDRlOGMzN2FjN2IwMTc6M2NhMDBlNmI0NTYyYzVjNzZmMTZlOTA3MzhkMzQxYzY3YzI0ZWQyZmUwYzYzZDk2OGEwMmI0ZjUyNTU5MDQ0OTZlMDQzNzdkMjk4ZmYxNGRkMzRlYzZmNzA4Yzc3M2ExZmI4ZjEyNjcxMGI1ZDllZDdhNDNhZTZiY2ZjNDY1MDdkZjQ1Mjc0MWZmODdmZDliNzRkYTU1NWNiOWI3ODljOCIsImlhdCI6MTY2Njk3MjM1NCwiZXhwIjoxNjY2OTc5NTU0fQ.cZcLI5gKPbCridaLHnzQEppbc-uVetMkbsq79gZ-McDyTb2CF7p8zXOGY7MwY_t5GrHG--CHw3cY2NuYPMt1RATnMFEK8Rt4RGQ6ERaLmdgOcnkelPVUQrU5nxFRCVI9ME4C5v1UZO3HWHw5OizP9oJr2_OZ6oAFooDXe_7wSi9yJIGcas73umLQchg3MFaxi3BcOIGq7PTvoVoM9HO3DUTgY2oEMrrCMfEWEGyNoWDdehGiINENN90N6kh7tMdOqOtcTla6v1mN-obejYXCMxtYoglgN4xQNQ1Bj699hIT9_vPJ3Ei8xVCLcVBOMNuv5KrnaVt-OvEmnz4cdD4bww"
+            url: 'https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/',
+            headers: { 
+                'Content-Type': 'application/json'
             },
-            body: {
-                cnpj: data.cnpj,
-                registered_name: data.registered_name,
-                username: data.username,
-                password: data.password,
-                whatsapp: data.whatsapp
-            }
-        }).then(response => {
-            console.log(response.status)
-            return response.status >= 400 ? response.json() : response.json()
-        }).then(data => console.log(data))
-        // const client = await fetch('https://still-meadow-57659.herokuapp.com/api/auth/client/user/create/', {
-        // method: 'POST',
-        // headers: {
-        //     "accept": "application/json",
-        //     "content-type": "application/json",
-        //     // "X-API-KEY": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNGI5YzgyMDE5N2FiYzdiZjZhZDRlOGMzN2FjN2IwMTc6M2NhMDBlNmI0NTYyYzVjNzZmMTZlOTA3MzhkMzQxYzY3YzI0ZWQyZmUwYzYzZDk2OGEwMmI0ZjUyNTU5MDQ0OTZlMDQzNzdkMjk4ZmYxNGRkMzRlYzZmNzA4Yzc3M2ExZmI4ZjEyNjcxMGI1ZDllZDdhNDNhZTZiY2ZjNDY1MDdkZjQ1Mjc0MWZmODdmZDliNzRkYTU1NWNiOWI3ODljOCIsImlhdCI6MTY2Njk3MjM1NCwiZXhwIjoxNjY2OTc5NTU0fQ.cZcLI5gKPbCridaLHnzQEppbc-uVetMkbsq79gZ-McDyTb2CF7p8zXOGY7MwY_t5GrHG--CHw3cY2NuYPMt1RATnMFEK8Rt4RGQ6ERaLmdgOcnkelPVUQrU5nxFRCVI9ME4C5v1UZO3HWHw5OizP9oJr2_OZ6oAFooDXe_7wSi9yJIGcas73umLQchg3MFaxi3BcOIGq7PTvoVoM9HO3DUTgY2oEMrrCMfEWEGyNoWDdehGiINENN90N6kh7tMdOqOtcTla6v1mN-obejYXCMxtYoglgN4xQNQ1Bj699hIT9_vPJ3Ei8xVCLcVBOMNuv5KrnaVt-OvEmnz4cdD4bww"
-        // },
-        // body: JSON.stringify({
-        //     // connectToken: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjM5M2Y3YjE4LWU1ODYtNDg5Mi1iNzM0LWM0NzRiMmRjNDA0YiIsImRhdGEiOiJkNzJmNDI2MGM1Y2E4N2MzNjU0ZmVlM2E0MDZkNjhiZjpjZDMzYTUwN2RkOTRmYjViOGJmYjFiMmY5ZTg4NmQyMWZiNDg5Yzk3NjA5NjBlYzdlNWI1ZDQ5ODM2YzhkZjk3NTY0MzgzOGRhMDliYmZjMGQ3NWEzODMyMjFlNzI1MzFlN2Y1NmRiMGQ5MTc1OThiNzgzMzFiYjQ5MTBlYjJlYTA3MjUzNzIwZGFlY2JlYzM3MzY0MGNhNjRlMjI1MTc2NTUwZjc2ZDYwYzZhYTFhMzUyYWM5NjEwZTljMWQ4ODhiY2MwMGRlNDQzMWVkNmMyYzY4ZmYxYjEyYzllYmE5MjZhMGUwNDQ3NDQ2OGZmYTdjMzIyYjk0NjE4ODViODY2IiwiaWF0IjoxNjY2OTA2NTg5LCJleHAiOjE2NjY5MDgzODl9.LZReFGgGvy-M6gT583-OsDb0UrrEjk_mB8J5MC7q1Y-HoOWhMo34VAZaJ1fvyJB4ESvF7HDLqYSHvvwiqfuvUlQf3-mcmfzGEDDHidNGwJGwTiK9mPgMSRA4LGCC8adLFF_9IWwUybjGFElGYsPq3gAbQbASrP8YoJgafycFfI7CDVa2kAeVO9xbyK30HXRT7oLmpElgbhjXgtNlew0IBq1iYQU52PiGTC9Bdd6zwgunEiJ6OPH7d8-OklG_6_0SV5AjFYaV1hPAci2mrNs78DrG7ac5r4e4avPziavrEXDpnH76mFI35rfuuEqzZZIGrbVMWfmznbU5I_Ei_rJueQ',
-        //         cnpj: data.cnpj,
-        //         registered_name: data.registered_name,
-        //         username: data.username,
-        //         password: data.password,
-        //         whatsapp: data.whatsapp
-        //     }),
-        // }).then(response => ({detail: response.json(), status: response.status}))
-        // .then(({detail, status}) => {
-        //     console.log(detail)
-        //     console.log(status)
-        //     if (response.status == 400) {
-        //     } else {
-        //         console.log('fake navigation')
-        //         // navigation.navigate('Tabs')
+            data: datas,
+        }).then(resp => {
+            console.log(resp)
+            storeData(resp.data.token)
+            navigation.navigate('Tabs');
+        });
 
-        //     }
-        // });
+        response;
 
-        // const responseJson = await client.json();
-
-        // responseJson;
-
-        // console.log('Client generated!')
+        // Router.push('/admin/login');
+    } catch (error) {
+        console.log('aksjdklaj');
+        console.log(error);
     }
-    catch (error) {
-        return ({ message: error.message });
+}
+
+const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@storage_Key', value)
+      console.log('Chave salva')
+    } catch (e) {
+      console.error(e)
     }
 }
