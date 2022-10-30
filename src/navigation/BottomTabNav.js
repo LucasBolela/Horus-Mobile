@@ -2,10 +2,13 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
 import Profile from '../screens/ProfileScreen';
 import Terms from '../screens/TermsScreen';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const CustomTabBarButton = ({children, onPress}) => {
@@ -34,7 +37,8 @@ const CustomTabBarButton = ({children, onPress}) => {
 
 const Tab = createBottomTabNavigator();
 
-export const Tabs = () => {
+export const Tabs = ({navigation}) => {
+    getData()
     return (
         <Tab.Navigator 
             screenOptions={{
@@ -73,27 +77,68 @@ export const Tabs = () => {
                     )
                 }}
             />
+            
             <Tab.Screen 
-                name="Terms" 
+                name="Terms"
                 component={Terms} 
-                options={{
-                    // tabBarIcon: ({focused}) => (
-                    //     <MaterialCommunityIcons
-                    //         name="bank-plus"
-                    //         size={35}
-                    //         color={focused ? "#165194" : "#ddd"}
-                    //         // style={{marginRight: 5}}
-                    //     />
-                    // ),
-                    tabBarButton: (props) => {
-                        console.log(props.children)
-                        return (
-                            <CustomTabBarButton children={props} />
-                        )}
+                options={({ navigation }) => ({
+                    tabBarIcon: ({focused}) => (
+                        <MaterialCommunityIcons
+                            name="bank-plus"
+                            size={35}
+                            color={focused ? "#ddd" : "#fff"}
+                            // style={{marginRight: 5}}
+                        />
 
+                    ),
+                    tabBarButton: (props) => (<TouchableOpacity
+                        style={{
+                            top: -30,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            ...style.shadow,
+                        }}
+                        onLongPress={  navigation.navigate('Widget')}
+                        // onPress={  console.log(props)}
+                    >
+                        <View
+                            style={{
+                                width: 70,
+                                height: 70,
+                                borderRadius: 35,
+                                backgroundColor: '#165194',
+                            }}
+                        >
+                            {props.children}
+                        </View>
+                    </TouchableOpacity>),
+                    // // tabBarButton: (props) => {
+                    // //     console.log(props.children)
+                         
+                    //         <CustomTabBarButton />
+                    //     )
+
+                })}
+            />
+            <Tab.Screen 
+                name="Profile" 
+                component={Profile} 
+                options={{
+                    tabBarIcon: ({focused}) => (
+
+                        <View>
+                            <Ionicons
+                                name="notifications"
+                                size={35}
+                                color={focused ? "#165194" : "#ddd"}
+                                // style={{marginRight: 5}}
+                            />
+                        </View>
+                    )
                 }}
             />
-            <Tab.Screen name="Profile" component={Profile} />
+            {/* <Tab.Screen name="Profile" component={Profile} /> */}
         </Tab.Navigator>
     );
 }
@@ -112,3 +157,15 @@ const style = StyleSheet.create({
         elevation: 5
     }
 });
+
+const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key')
+      if(value !== null) {
+        console.log('Chave recebida')
+        console.log(value)
+      }
+    } catch(e) {
+      // error reading value
+    }
+}
